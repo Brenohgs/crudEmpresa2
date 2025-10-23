@@ -79,7 +79,8 @@ public class EmpresaController {
   @GetMapping("/buscarEmpresaNome")
   public String executarBuscaPorNome(@RequestParam("nome") String nome_empresa, Model oModel) {
     if(nome_empresa != null && !nome_empresa.isEmpty()){
-        oModel.addAttribute("empresaNome", empresaService.buscarEmpresaPorNome(nome_empresa));
+        oModel.addAttribute("empresaNome", 
+        empresaService.buscarEmpresaPorNome(nome_empresa));
     }
       return "buscarEmpresaNome";
   }
