@@ -9,6 +9,8 @@ import com.example.crudSpring.projetoCRUD.ENTITY.Funcionario;
 import com.example.crudSpring.projetoCRUD.SERVICE.EmpresaService;
 import com.example.crudSpring.projetoCRUD.SERVICE.FuncionarioService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Controller
@@ -21,10 +23,11 @@ public class FuncionarioController {
     @Autowired
     private EmpresaService ligacaoEmpresaService;
 
-    @GetMapping("/listarFuncionarios")
+    @GetMapping("/listarFunc")
     public String listarTodosFuncionarios(Model oModel) {
         oModel.addAttribute("funcionarios", ligacaoFuncionarioService.listarTodosFuncionarios());
-        return "listarFuncionarios";
+        oModel.addAttribute("empresa", ligacaoEmpresaService.findAll());
+        return "listarFuncionario";
     }
 
     @GetMapping("/formFuncionario")
@@ -34,5 +37,10 @@ public class FuncionarioController {
         return "cadastrarFuncionario";
     }
     
-    
+    @PostMapping("/salvarFuncionario")
+    public String cadastrarFuncionario(
+        @ModelAttribute Funcionario objFuncionario){
+            ligacaoFuncionarioService.cadastFuncionario(objFuncionario);
+            return "redirect:/funcionarioCTR/listarFunc";
+        }
 }
