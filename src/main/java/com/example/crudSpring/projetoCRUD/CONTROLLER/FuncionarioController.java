@@ -10,6 +10,7 @@ import com.example.crudSpring.projetoCRUD.SERVICE.EmpresaService;
 import com.example.crudSpring.projetoCRUD.SERVICE.FuncionarioService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -43,4 +44,10 @@ public class FuncionarioController {
             ligacaoFuncionarioService.cadastFuncionario(objFuncionario);
             return "redirect:/funcionarioCTR/listarFunc";
         }
+    @GetMapping("/deletarFuncionario/{codigo}")
+    public String apagarFuncionario(@PathVariable("codigo") long codigo) {
+        ligacaoFuncionarioService.deletarFuncionario(codigo);
+        return "redirect:/funcionarioCTR/listarFunc";
+    }
+    
 }
