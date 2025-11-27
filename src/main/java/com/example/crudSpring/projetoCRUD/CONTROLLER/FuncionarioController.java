@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -28,26 +30,34 @@ public class FuncionarioController {
     public String listarTodosFuncionarios(Model oModel) {
         oModel.addAttribute("funcionarios", ligacaoFuncionarioService.listarTodosFuncionarios());
         oModel.addAttribute("empresa", ligacaoEmpresaService.findAll());
-        return "listarFuncionario";
+            return "listarFuncionario";
     }
 
     @GetMapping("/formFuncionario")
     public String mostrarFormCadastro(Model oModel) {
         oModel.addAttribute("funcionario", new Funcionario());
         oModel.addAttribute("empresas", ligacaoEmpresaService.findAll());
-        return "cadastrarFuncionario";
+            return "cadastrarFuncionario";
     }
     
     @PostMapping("/salvarFuncionario")
     public String cadastrarFuncionario(
         @ModelAttribute Funcionario objFuncionario){
             ligacaoFuncionarioService.cadastFuncionario(objFuncionario);
-            return "redirect:/funcionarioCTR/listarFunc";
+                return "redirect:/funcionarioCTR/listarFunc";
         }
     @GetMapping("/deletarFuncionario/{codigo}")
     public String apagarFuncionario(@PathVariable("codigo") long codigo) {
         ligacaoFuncionarioService.deletarFuncionario(codigo);
-        return "redirect:/funcionarioCTR/listarFunc";
+                return "redirect:/funcionarioCTR/listarFunc";
+    }
+    @GetMapping("/formAtualizar/{id}")
+    public String formAtualizarFuncionario (@PathVariable("id")Long id, Model oModel){
+        Funcionario funcionarioEncontrado = ligacaoFuncionarioService.buscarFuncionarioPorId(id)
+        .orElseThrow(() -> new IllegalArgumentException("Funcionário não encontrado"));
+            oModel.addAttribute("funcionario", funcionarioEncontrado);
+            oModel.addAttribute("empresas", ligacaoEmpresaService.findAll());
+                return "redirect:/funcionarioCTR/editarFuncionario";
     }
     
 }
