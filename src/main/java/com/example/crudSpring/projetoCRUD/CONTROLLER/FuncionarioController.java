@@ -57,7 +57,14 @@ public class FuncionarioController {
         .orElseThrow(() -> new IllegalArgumentException("Funcionário não encontrado"));
             oModel.addAttribute("funcionario", funcionarioEncontrado);
             oModel.addAttribute("empresas", ligacaoEmpresaService.findAll());
-                return "redirect:/funcionarioCTR/editarFuncionario";
+                return "editarFuncionario";
     }
-    
+    @PostMapping("/atualizarFuncionario/{id}")
+    public String editarFuncionaio(
+            @PathVariable("id") Long id, @ModelAttribute Funcionario
+            objFuncionarioAtualizar){
+                ligacaoFuncionarioService.atualizarFuncionario(id, objFuncionarioAtualizar);
+
+                return "redirect:/funcionarioCTR/listarFunc";
+            }   
 }
