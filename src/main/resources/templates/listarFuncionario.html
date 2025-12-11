@@ -2,21 +2,126 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Listar Funcionários</title>
-
+    <title>Lista de Funcionários</title>
     <style>
-    table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    }
-    </style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            padding: 40px;
+        }
 
+        h2 {
+            color: #2f5d3a;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        thead {
+            background-color: #4caf50;
+            color: #ffffff;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #dddddd;
+            transition: background-color 0.3s;
+        }
+
+        tbody tr:hover {
+            background-color: #e8f5e9;
+        }
+
+        a {
+            text-decoration: none;
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-right: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a[href*="formAtualizar"] {
+            background-color: #388e3c;
+        }
+
+        a[href*="formAtualizar"]:hover {
+            background-color: #2e7d32;
+        }
+
+        a[href*="deletarFuncionario"] {
+            background-color: #e53935;
+        }
+
+        a[href*="deletarFuncionario"]:hover {
+            background-color: #c62828;
+        }
+
+        .btn-novo {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-novo:hover {
+            background-color: #388e3c;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tbody tr {
+                margin-bottom: 15px;
+                border-bottom: 2px solid #ddd;
+            }
+
+            tbody td {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+                border: none;
+                border-bottom: 1px solid #ddd;
+            }
+
+            tbody td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #2f5d3a;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <h2>Lista de Funcionários</h2>
 
-<table border="1">
+<table>
     <thead>
         <tr>
             <th>Codigo</th>
@@ -29,23 +134,21 @@
     </thead>
     <tbody>
         <tr th:each="func : ${funcionarios}">
-            <td th:text="${func.codigo}"></td>
-            <td th:text="${func.nome}"></td>
-            <td th:text="${func.cargo}"></td>
-            <td th:text="${func.salario}"></td>
-            <td th:text="${func.identificadorEmpresa.nome}"></td>
-            <td>
+            <td data-label="Codigo" th:text="${func.codigo}"></td>
+            <td data-label="Nome" th:text="${func.nome}"></td>
+            <td data-label="Cargo" th:text="${func.cargo}"></td>
+            <td data-label="Salário" th:text="${func.salario}"></td>
+            <td data-label="Empresa" th:text="${func.identificadorEmpresa.nome}"></td>
+            <td data-label="Ações">
                 <a th:href="@{/funcionarioCTR/formAtualizar/{id}(id=${func.codigo})}">Editar</a>
-
                 <a th:href="@{/funcionarioCTR/deletarFuncionario/{id}(id=${func.codigo})}"
-                onclick="return confirm('Deseja realmente excluir este Funcionário?')">Excluir</a>
+                   onclick="return confirm('Deseja realmente excluir este Funcionário?')">Excluir</a>
             </td>
         </tr>
     </tbody>
 </table>
 
-<br>
-<a th:href="@{/funcionarioCTR/formFuncionario}">Cadastrar Novo Funcionário</a>
+<a class="btn-novo" th:href="@{/funcionarioCTR/formFuncionario}">Cadastrar Novo Funcionário</a>
 
 </body>
 </html>

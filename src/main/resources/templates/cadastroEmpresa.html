@@ -4,37 +4,127 @@
     <meta charset="UTF-8">
     <title>Cadastrar Empresa</title>
 
-    
+    <style>
+        :root {
+            --verde-dark: #1b5e20;
+            --verde: #2e7d32;
+            --verde-light: #e9f7ec;
+            --cinza-claro: #f3f8f4;
+            --branco: #ffffff;
+            --preto: #222;
+            --transition: 0.25s ease;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, sans-serif;
+            background: var(--cinza-claro);
+            color: var(--preto);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: var(--branco);
+            padding: 35px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--verde-dark);
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: 600;
+            color: var(--verde);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--verde);
+            border-radius: 8px;
+            font-size: 15px;
+            background: var(--branco);
+            transition: var(--transition);
+        }
+
+        input:focus {
+            border-color: var(--verde-dark);
+            box-shadow: 0 0 5px rgba(27, 94, 32, 0.4);
+            outline: none;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        button {
+            background: var(--verde);
+            color: var(--branco);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        button:hover {
+            background: var(--verde-dark);
+            transform: translateY(-2px);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--verde);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--verde-dark);
+        }
+    </style>
+
 </head>
 <body>
 
-    <h2>Cadastrar Empresa</h2>
+    <div class="container">
 
-    <!-- Formulário para cadastro -->
-    <form th:action="@{/empresaCTR/salvarEmpresa}" th:object="${empresa}" method="post">
+        <h2>Cadastrar Empresa</h2>
 
-        <label for="nome">Nome da Empresa</label>
-        <input type="text" th:field="*{nome}" id="nome" required>
-        <br>
-        <br>
+        <!-- Formulário para cadastro -->
+        <form th:action="@{/empresaCTR/salvarEmpresa}" th:object="${empresa}" method="post">
 
-        <label for="cnpj">CNPJ</label>
-        <input type="text" th:field="*{cnpj}" id="cnpj" required>
-        <br>
-        <br>
+            <label for="nome">Nome da Empresa</label>
+            <input type="text" th:field="*{nome}" id="nome" required>
 
-        <label for="ramo">Ramo da Empresa</label>
-        <input type="text" th:field="*{ramo}" id="ramo" required>
-        <br>
-        <br>
+            <label for="cnpj">CNPJ</label>
+            <input type="text" th:field="*{cnpj}" id="cnpj" required>
 
-        <button type="submit" class="btn btn-success">Salvar</button>
-        <a th:href="@{/empresaCTR}">Cancelar</a>
+            <label for="ramo">Ramo da Empresa</label>
+            <input type="text" th:field="*{ramo}" id="ramo" required>
 
-    </form>
+            <div class="actions">
+                <button type="submit">Salvar</button>
+                <a th:href="@{/empresaCTR}">Cancelar</a>
+            </div>
 
+        </form>
 
-   
+    </div>
+
 </body>
 </html>
-

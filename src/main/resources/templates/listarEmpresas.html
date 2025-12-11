@@ -3,13 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Empresas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            padding: 40px;
+        }
 
-<style>
-    table, th, td {
-    border: 1px solid black; /* Applies a 1px solid black border to the table, table headers, and table data cells */
-    border-collapse: collapse; /* Collapses adjacent borders into a single border */
-    }
-</style>
+        h2 {
+            color: #2f5d3a;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        thead {
+            background-color: #4caf50;
+            color: #ffffff;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #dddddd;
+            transition: background-color 0.3s;
+        }
+
+        tbody tr:hover {
+            background-color: #e8f5e9;
+        }
+
+        a {
+            text-decoration: none;
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-right: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a[href*="editar"] {
+            background-color: #388e3c;
+        }
+
+        a[href*="editar"]:hover {
+            background-color: #2e7d32;
+        }
+
+        a[href*="deletar"] {
+            background-color: #e53935;
+        }
+
+        a[href*="deletar"]:hover {
+            background-color: #c62828;
+        }
+
+        .btn-nova {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-nova:hover {
+            background-color: #388e3c;
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tbody tr {
+                margin-bottom: 15px;
+                border-bottom: 2px solid #ddd;
+            }
+
+            tbody td {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+                border: none;
+                border-bottom: 1px solid #ddd;
+            }
+
+            tbody td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #2f5d3a;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -28,25 +133,20 @@
         <tbody>
             <!-- Loop para listar todas as empresas -->
             <tr th:each="empresa : ${empresas}">
-                <td th:text="${empresa.id_empresa}"></td>
-                <td th:text="${empresa.nome}"></td>
-                <td th:text="${empresa.cnpj}"></td>
-                <td th:text="${empresa.ramo}"></td>
-                <td>
-                    <!-- Botão Editar -->
+                <td data-label="ID" th:text="${empresa.id_empresa}"></td>
+                <td data-label="Nome" th:text="${empresa.nome}"></td>
+                <td data-label="CNPJ" th:text="${empresa.cnpj}"></td>
+                <td data-label="Ramo" th:text="${empresa.ramo}"></td>
+                <td data-label="Ações">
                     <a th:href="@{/empresaCTR/editar/{id}(id=${empresa.id_empresa})}">Editar</a>
-                    
-                    <!-- Botão Excluir -->
                     <a th:href="@{/empresaCTR/deletarEmpresa/{id}(id=${empresa.id_empresa})}" 
-                    onclick="return confirm('Deseja realmente excluir esta empresa?')">Excluir</a>
+                       onclick="return confirm('Deseja realmente excluir esta empresa?')">Excluir</a>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <br>
-
-    <a th:href="@{/empresaCTR/viewCadEmpresa}">Nova Empresa</a>
+    <a class="btn-nova" th:href="@{/empresaCTR/viewCadEmpresa}">Nova Empresa</a>
 
 </body>
 </html>
